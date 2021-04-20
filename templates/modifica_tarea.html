@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/457fd98281.js" crossorigin="anonymous"></script>
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To Do List: Modificar Tarea</title>
+
+
+    <script>
+        function check() {
+            const edNombre = document.getElementById("edNombre");
+            const edDescripcion = document.getElementById("edDescripcion");
+            const edFecha = document.getElementById("edFecha");
+
+            return ( edNombre.value.trim().length > 0
+                && edDescripcion.value.trim().length > 0
+                && edFecha.value.trim().length > 0);
+        }
+
+    </script>
+
+    <script>
+        function change()
+        {
+            var elem = document.getElementById("edTodo");
+            if (elem.value== "Terminado"){
+                elem.value = "Pendiente"
+            }
+            else elem.value = "Terminado";
+        }
+    </script>
+
+</head>
+<body>
+<div class="container-fluid">
+    <h1>Modificar Tarea</h1>
+    <form id="frmModificaTarea"
+            method="post"
+            action="/tareas/modifica"
+            onsubmit="return check()"
+            class="border rounded col-5">
+    <div class="form-group">
+
+    <p>
+    <label for="edNombre" style="margin-top: 10px">Nombre: </label>
+        <input class="form-control" type="text" id="edNombre" name="edNombre" placeholder="Inserta el nombre de la tarea" value= "{{ tarea.nombre }}">
+    </p>
+
+    <div>
+    <p>
+    <label for="edDescripcion">Descripcion: </label>
+        <input class="form-control" type="text" id="edDescripcion" name="edDescripcion" value= "{{ tarea.descripcion }}" ></input>
+    </p>
+    </div>
+
+    <div>
+    <p>
+    <label for="edFecha">Fecha: </label>
+        <input class="form-control" type="date" id="edFecha" name="edFecha" min="2020-01-01" placeholder="2020-01-01" value= {{ tarea.fecha }}>
+    </p>
+    </div>
+
+    <div>
+    <p>
+    <label for="edTodo">Estado: </label>
+        <select class="form-control" id="edTodo" name="edTodo">
+          <option value= {{ tarea.todo }} >{{ tarea.todo }}</option>
+          <option value="Terminado">Terminado</option>
+          <option value="Pendiente">Pendiente</option>
+          <option value="Completando...">Completando...</option>
+        </select>
+    </p>
+    </div>
+
+    <p><input class="btn btn-secondary btn-lg btn-block" type="submit" value="Modificar"></p>
+
+    </div>
+    </form>
+</div>
+</body>
+</html>

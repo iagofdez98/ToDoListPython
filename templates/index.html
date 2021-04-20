@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/457fd98281.js" crossorigin="anonymous"></script>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To Do List</title>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+    <h1 class="display-3">ALS - To Do</h1>
+    <h3 class="display-5">El lugar donde guardar tus tareas</h3>
+    <p>
+    <a href="/tareas/nueva" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> Añadir tarea</a>
+    </p>
+
+    {% if tareas.count() > 0 %}
+        <div class="row">
+        {% for tarea in tareas %}
+                <div class="col-sm-2">
+                {% if 'Pendiente' in tarea.todo %}
+                        <div class="card border-warning mb-3" style="max-width: 18rem;">
+                            <div class="card-header">
+                                <b>{{ tarea.nombre }}</b>
+                                <a href="/tareas/modifica?id={{ tarea.key.urlsafe() }}" ><i class="far fa-edit"></i></a>
+                                <a href="/tareas/elimina?id={{ tarea.key.urlsafe() }}"> <i class="far fa-trash-alt"></i></a>
+                            </div>
+
+                            <div class="card-body text-warning">
+                                <label>{{ tarea.descripcion }}</label><br>
+
+
+                                <label ><i class="far fa-calendar-alt"></i> {{ tarea.fecha }}</label>
+
+                                <br>
+                            </div>
+                        </div>
+                {% endif %}
+
+
+                    {% if 'Terminado' in tarea.todo %}
+                        <div class="card border-dark mb-3" style="max-width: 18rem;">
+                            <div class="card-header">
+                                    <b><strike> {{ tarea.nombre }} </strike></b>
+                                    <a href="/tareas/modifica?id={{ tarea.key.urlsafe() }}" ><i class="far fa-edit"></i></a>
+                                    <a href="/tareas/elimina?id={{ tarea.key.urlsafe() }}"> <i class="far fa-trash-alt"></i></a>
+                            </div>
+
+                            <div class="card-body">
+                                <label><strike>{{ tarea.descripcion }}</strike></label><br>
+                                <label ><i class="far fa-calendar-alt"></i> <strike>{{ tarea.fecha }}</strike></label>
+                                <br>
+                            </div>
+                        </div>
+                    {% endif %}
+
+
+                    {% if 'Completando...' in tarea.todo %}
+                        <div class="card border-primary mb-3" style="max-width: 18rem;">
+                            <div class="card-header">
+                                    <b> {{ tarea.nombre }}</b>
+                                    <a href="/tareas/modifica?id={{ tarea.key.urlsafe() }}" ><i class="far fa-edit"></i></a>
+                                    <a href="/tareas/elimina?id={{ tarea.key.urlsafe() }}"> <i class="far fa-trash-alt"></i></a>
+                            </div>
+
+                            <div class="card-body text-primary">
+                                <label>{{ tarea.descripcion }}</label><br>
+                                <label ><i class="far fa-calendar-alt"></i>{{ tarea.fecha }}</label>
+                                <br>
+                            </div>
+                        </div>
+                    {% endif %}
+                    </div>
+            {% endfor %}
+        </div>
+    {% else %}
+    <p><b>Todavía no se han registrado tareas</b></p>
+    </div>
+    {% endif %}
+</body>
+</html>
